@@ -10,13 +10,16 @@ const CreateBoard = props => {
 		setBoard("");
 	};
 	return (
-		<form onSubmit={onSubmit}>
+		<form className="ui form" onSubmit={onSubmit}>
+			<label>Create A Board</label>
 			<input
 				type="text"
 				value={board}
 				onChange={e => setBoard(e.target.value)}
 			/>
-			<button type="submit">Submit</button>
+			<button className="ui button" type="submit">
+				Submit
+			</button>
 		</form>
 	);
 };
