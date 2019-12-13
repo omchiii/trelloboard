@@ -32,7 +32,7 @@ export const createList = (boardId, listName) => {
 		const parsed = [];
 		parsed.push({
 			boardId: boardId,
-			listId: parsed.length + 1,
+			listId: parsed.length,
 			listName,
 			listData: []
 		});
@@ -44,9 +44,16 @@ export const createList = (boardId, listName) => {
 	}
 
 	const parsed = JSON.parse(localStorage.getItem("listCollection"));
+	const ids = () => {
+		if (parsed.length === 1) {
+			return 1;
+		}
+		return parsed.length;
+	};
+
 	parsed.push({
 		boardId,
-		listId: parsed.length + 1,
+		listId: ids(),
 		listName,
 		listData: []
 	});
@@ -62,6 +69,17 @@ export const getLists = () => {
 	const parsed = JSON.parse(localStorage.getItem("listCollection"));
 	return {
 		type: "GET_LISTS",
+		payload: parsed
+	};
+};
+
+export const createData = (li, listId) => {
+	const parsed = JSON.parse(localStorage.getItem("listCollection"));
+	parsed[listId].listData.push(li);
+
+	localStorage.setItem("listCollection", JSON.stringify(parsed));
+	return {
+		type: "CREATE_DATA",
 		payload: parsed
 	};
 };
