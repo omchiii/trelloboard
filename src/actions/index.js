@@ -26,3 +26,42 @@ export const getBoards = () => {
 		payload: parsed
 	};
 };
+
+export const createList = (boardId, listName) => {
+	if (!localStorage.getItem("listCollection")) {
+		const parsed = [];
+		parsed.push({
+			boardId: boardId,
+			listId: parsed.length + 1,
+			listName,
+			listData: []
+		});
+		localStorage.setItem("listCollection", JSON.stringify(parsed));
+		return {
+			type: "CREATE_LIST",
+			payload: parsed
+		};
+	}
+
+	const parsed = JSON.parse(localStorage.getItem("listCollection"));
+	parsed.push({
+		boardId,
+		listId: parsed.length + 1,
+		listName,
+		listData: []
+	});
+	localStorage.setItem("listCollection", JSON.stringify(parsed));
+
+	return {
+		type: "CREATE_LIST",
+		payload: parsed
+	};
+};
+
+export const getLists = () => {
+	const parsed = JSON.parse(localStorage.getItem("listCollection"));
+	return {
+		type: "GET_LISTS",
+		payload: parsed
+	};
+};
