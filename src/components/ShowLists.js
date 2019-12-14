@@ -4,56 +4,62 @@ import { getLists } from "../actions";
 import { createData } from "../actions";
 
 const ShowLists = props => {
-	const [li, setLi] = useState("");
-	const [listId, setListId] = useState("");
+  const [li, setLi] = useState({});
+  const [listId, setListId] = useState("");
 
-	const onSubmit = e => {
-		e.preventDefault();
-		props.createData(li, listId);
-		setLi("");
-	};
+  const onSubmit = e => {
+    e.preventDefault();
+    props.createData(li[listId], listId);
+    setLi({ ...li, [listId]: "" });
+  };
 
-	useEffect(() => {
-		props.getLists();
-	}, []);
+  function onChange(evt) {
+    const value = evt.target.value;
+    setLi({ ...li, [evt.target.name]: value });
+  }
 
-	const obj = () => {
-		if (props.lists) {
-			return props.lists
-				.filter(x => x.boardId === props.id)
-				.map(list => (
-					<div>
-						<ul>{list.listName}</ul>
-						<form className="ui form" onSubmit={onSubmit}>
-							<input
-								type="text"
-								onClick={() => setListId(list.listId)}
-								onChange={e => setLi(e.target.value)}
-								value={li}
-							/>
-							<button
-								className="ui button primary"
-								onClick={() => setListId(list.listId)}
-								type="submit"
-							>
-								Submit
-							</button>
+  useEffect(() => {
+    props.getLists();
+  }, []);
 
-							{list.listData.map(data => {
-								return <li>{data}</li>;
-							})}
-						</form>
-					</div>
-				));
-		}
-		return <div></div>;
-	};
+  const obj = () => {
+    if (props.lists) {
+      return props.lists
+        .filter(x => x.boardId === props.id)
+        .map(list => (
+          <div>
+            <ul>{list.listName}</ul>
+            <form className="ui form" onSubmit={onSubmit}>
+              <input
+                name={list.listId}
+                type="text"
+                onClick={() => setListId(list.listId)}
+                onChange={onChange}
+                value={li[list.listId]}
+              />
+              <button
+                className="ui button primary"
+                onClick={() => setListId(list.listId)}
+                type="submit"
+              >
+                Submit
+              </button>
 
-	return <div>{obj()}</div>;
+              {list.listData.map(data => {
+                return <li>{data}</li>;
+              })}
+            </form>
+          </div>
+        ));
+    }
+    return <div></div>;
+  };
+
+  return <div>{obj()}</div>;
 };
 
 const mapStateToProps = state => {
-	return { lists: state.lists };
+  return { lists: state.lists };
 };
 
 export default connect(mapStateToProps, { getLists, createData })(ShowLists);
