@@ -7,8 +7,9 @@ const Board = props => {
 			<div className="card">
 				<div className="content">
 					<div className="header">{props.board.boardName}</div>
+					<br />
 					<Link to={`/${props.board.id}`}>
-						<button className="ui button primary">Show</button>
+						<div className="ui bottom attached button primary">Show Board!</div>
 					</Link>
 				</div>
 			</div>

@@ -15,7 +15,7 @@ const BoardDetail = props => {
 			if (obj) {
 				return (
 					<div>
-						<h2>{obj.boardName}</h2>
+						<h2 className="ui container">{obj.boardName}</h2>
 						<CreateList id={obj.id} />
 						<ShowLists id={obj.id} />
 					</div>

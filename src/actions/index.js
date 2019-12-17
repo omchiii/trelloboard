@@ -46,7 +46,7 @@ export const createList = (boardId, listName) => {
 	const parsed = JSON.parse(localStorage.getItem("listCollection"));
 	const ids = () => {
 		if (parsed.length === 1) {
-			return 1;
+			return parsed.length;
 		}
 		return parsed.length;
 	};
@@ -75,11 +75,27 @@ export const getLists = () => {
 
 export const createData = (li, listId) => {
 	const parsed = JSON.parse(localStorage.getItem("listCollection"));
-	parsed[listId].listData.push(li);
+
+	const indexof = parsed.findIndex(obj => obj.listId === listId);
+
+	parsed[indexof].listData.push({ id: Math.random(), data: li });
 
 	localStorage.setItem("listCollection", JSON.stringify(parsed));
 	return {
 		type: "CREATE_DATA",
+		payload: parsed
+	};
+};
+
+export const deleteData = (liId, listId) => {
+	const parsed = JSON.parse(localStorage.getItem("listCollection"));
+	const indexof = parsed.findIndex(obj => obj.listId === listId);
+	const filtered = parsed[indexof].listData.filter(data => data.id !== liId);
+	parsed[indexof].listData = filtered;
+
+	localStorage.setItem("listCollection", JSON.stringify(parsed));
+	return {
+		type: "DELETE_DATA",
 		payload: parsed
 	};
 };
