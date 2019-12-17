@@ -12,8 +12,10 @@ const CreateList = props => {
 	};
 
 	return (
-		<form onSubmit={onSubmit} className="ui form">
+		<form onSubmit={onSubmit} className="ui container form">
 			<input type="text" onChange={e => setList(e.target.value)} value={list} />
+			<br />
+
 			<button className="ui button primary" type="submit">
 				Create List
 			</button>

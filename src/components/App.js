@@ -7,14 +7,16 @@ import BoardDetail from "./BoardDetail";
 
 const App = () => {
 	return (
-		<div className="ui container">
-			<BrowserRouter>
+		<BrowserRouter>
+			<div class="ui container">
 				<Route path="/" exact component={CreateBoard} />
-				<br />
+			</div>
+			<br />
+			<div class="ui container">
 				<Route path="/" exact component={BoardList} />
-				<Route path="/:id" exact component={BoardDetail} />
-			</BrowserRouter>
-		</div>
+			</div>
+			<Route path="/:id" exact component={BoardDetail} />
+		</BrowserRouter>
 	);
 };
 
