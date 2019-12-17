@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { getLists } from "../actions";
 import { createData, deleteData } from "../actions";
+
 import "./ShowLists.css";
 
 const ShowLists = props => {
@@ -38,10 +39,11 @@ const ShowLists = props => {
 		);
 		setobjindex(selObjIndex);
 	}
-	function ondragenter(listejd) {
+
+	const ondragenter = listejd => {
 		if (selectedObj.listId !== listejd) {
 			var lists2 = props.lists;
-
+			console.log(listejd.listId);
 			const indexof2 = lists2.findIndex(obj => obj.listId === listejd);
 
 			lists2.splice(sobjindex, 1);
@@ -53,7 +55,7 @@ const ShowLists = props => {
 
 			setdragClassName2(selectedObj.listId);
 		}
-	}
+	};
 
 	function allowDrop2(ev) {
 		ev.preventDefault();
@@ -115,7 +117,7 @@ const ShowLists = props => {
 								draggable="true"
 								id={list.listId}
 								onDragStart={() => onListDragStart(list.listId)}
-								onDragEnter={e => ondragenter(e, list.listId)}
+								onDragEnter={e => ondragenter(list.listId)}
 								onDragOver={e => allowDrop2(e, list.listId)}
 								onDragEnd={ondragend2}
 								onClick={() => setListId(list.listId)}
